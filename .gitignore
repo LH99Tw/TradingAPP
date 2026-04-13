@@ -50,3 +50,4 @@ coverage.xml
 # Local generated assets
 # =========================
 /reference
+/etc/review-shots
