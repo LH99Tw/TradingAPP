@@ -26,12 +26,20 @@
   box-sizing: border-box;
 }
 
+html {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
 body {
   margin: 0;
-  min-height: 100vh;
+  width: 100%;
+  height: 100%;
   color: var(--ink-primary);
   font-family: "Manrope", -apple-system, "SF Pro Display", "SF Pro Text", "Noto Sans KR", sans-serif;
   background: linear-gradient(180deg, #f7f8fb 0%, #f2f4f8 100%);
+  overflow: hidden;
 }
 
 a {
@@ -48,11 +56,15 @@ a {
 }
 
 #root {
-  min-height: 100vh;
+  width: 100%;
+  height: 100%;
 }
 
 .app-shell {
-  min-height: 100vh;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-rows: auto 2px minmax(0, 1fr);
 }
 
 .top-bar {
@@ -146,6 +158,34 @@ a {
   border-color: var(--accent-line);
   color: var(--accent-blue);
   background: var(--accent-blue-soft);
+}
+
+.top-progress-track {
+  position: relative;
+  width: 100%;
+  height: 2px;
+  background: rgba(173, 216, 230, 0.28);
+  overflow: hidden;
+}
+
+.top-progress-fill {
+  display: block;
+  height: 100%;
+  border-radius: var(--radius-pill);
+  background: linear-gradient(90deg, rgba(166, 207, 232, 0.45) 0%, rgba(142, 194, 226, 0.58) 100%);
+  transition: width 260ms ease;
+}
+
+.content-scroll {
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: none;
+}
+
+.content-scroll::-webkit-scrollbar {
+  width: 0;
+  height: 0;
 }
 
 .dashboard-shell,
