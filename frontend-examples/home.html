@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trading APP | Home Example</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+    <div class="app-shell">
+        <header class="top-bar">
+            <div class="top-left">
+                <div class="brand">
+                    <span class="brand-main">Trading</span>
+                    <span class="brand-sub">APP</span>
+                </div>
+                <nav class="main-nav" aria-label="Main">
+                    <a href="#" class="active">Dashboard</a>
+                    <a href="#">Menu _ 1</a>
+                    <a href="#">Menu _ 2</a>
+                </nav>
+            </div>
+            <button class="settings-button" aria-label="Open settings">⚙</button>
+        </header>
+
+        <main class="home-grid">
+            <section class="panel portfolio-panel">
+                <h2 class="panel-title">My Portfolio</h2>
+                <div class="chart-card">
+                    <div class="chart-toolbar">
+                        <span class="tag">AAPL</span>
+                        <span class="tag">MSFT</span>
+                        <span class="tag">TSLA</span>
+                    </div>
+                    <svg viewBox="0 0 800 340" class="chart-svg" role="img" aria-label="Portfolio chart">
+                        <defs>
+                            <linearGradient id="lineGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="#0f8adf" />
+                                <stop offset="100%" stop-color="#ab5fff" />
+                            </linearGradient>
+                        </defs>
+                        <g class="grid">
+                            <line x1="0" y1="40" x2="800" y2="40"></line>
+                            <line x1="0" y1="110" x2="800" y2="110"></line>
+                            <line x1="0" y1="180" x2="800" y2="180"></line>
+                            <line x1="0" y1="250" x2="800" y2="250"></line>
+                            <line x1="0" y1="320" x2="800" y2="320"></line>
+                        </g>
+                        <polyline
+                            fill="none"
+                            stroke="url(#lineGrad)"
+                            stroke-width="4"
+                            points="0,255 35,272 70,225 105,188 140,147 175,166 210,235 245,198 280,171 315,161 350,214 385,165 420,173 455,142 490,158 525,128 560,93 595,46 630,70 665,129 700,206 735,148 770,162 800,154">
+                        </polyline>
+                        <g class="volumes">
+                            <rect x="20" y="255" width="10" height="65"></rect>
+                            <rect x="45" y="225" width="10" height="95"></rect>
+                            <rect x="95" y="240" width="10" height="80"></rect>
+                            <rect x="170" y="210" width="10" height="110"></rect>
+                            <rect x="255" y="235" width="10" height="85"></rect>
+                            <rect x="320" y="260" width="10" height="60"></rect>
+                            <rect x="380" y="205" width="10" height="115"></rect>
+                            <rect x="470" y="195" width="10" height="125"></rect>
+                            <rect x="590" y="225" width="10" height="95"></rect>
+                            <rect x="705" y="210" width="10" height="110"></rect>
+                            <rect x="755" y="235" width="10" height="85"></rect>
+                        </g>
+                    </svg>
+                </div>
+
+                <section class="sector-panel">
+                    <h3>Sector</h3>
+                    <div class="sector-bar" aria-hidden="true">
+                        <span class="sector-it"></span>
+                        <span class="sector-fin"></span>
+                        <span class="sector-ind"></span>
+                        <span class="sector-energy"></span>
+                    </div>
+                    <ul class="sector-legend">
+                        <li><span class="legend-dot it"></span>IT</li>
+                        <li><span class="legend-dot energy"></span>Energy</li>
+                    </ul>
+                </section>
+            </section>
+
+            <aside class="panel strategy-panel">
+                <div class="strategy-head">
+                    <h2 class="strategy-title">Strategy</h2>
+                    <div class="portfolio-menu" aria-label="Portfolio toggle">
+                        <button type="button" class="portfolio-trigger" aria-expanded="false" aria-controls="portfolio-drawer">
+                            <span>portfolio</span>
+                            <span class="portfolio-chevron" aria-hidden="true">▾</span>
+                        </button>
+                        <div id="portfolio-drawer" class="portfolio-drawer" hidden>
+                            <button type="button" class="portfolio-tab is-active" aria-selected="true" data-target="portfolio-1">
+                                portfolio 1
+                            </button>
+                            <button type="button" class="portfolio-tab" aria-selected="false" data-target="portfolio-2">
+                                portfolio 2
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="strategy-content">
+                    <div class="metrics-shell">
+                        <div class="strategy-metrics is-active" data-portfolio-panel="portfolio-1">
+                            <article class="metric-item">
+                                <p class="metric-line"><strong>35</strong><span>%</span></p>
+                                <p class="metric-meta">
+                                    <span>Alpha01</span>
+                                    <span class="positive">+ 5.74%</span>
+                                </p>
+                            </article>
+                            <article class="metric-item">
+                                <p class="metric-line"><strong>17</strong><span>%</span></p>
+                                <p class="metric-meta">
+                                    <span>Macro.v2</span>
+                                    <span class="negative">- 4.22%</span>
+                                </p>
+                            </article>
+                        </div>
+                        <div class="strategy-metrics" data-portfolio-panel="portfolio-2">
+                            <article class="metric-item">
+                                <p class="metric-line"><strong>22</strong><span>%</span></p>
+                                <p class="metric-meta">
+                                    <span>MomentumX</span>
+                                    <span class="positive">+ 3.18%</span>
+                                </p>
+                            </article>
+                            <article class="metric-item">
+                                <p class="metric-line"><strong>13</strong><span>%</span></p>
+                                <p class="metric-meta">
+                                    <span>ValueCore</span>
+                                    <span class="negative">- 1.05%</span>
+                                </p>
+                            </article>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <aside class="panel future-panel">
+                <h2 class="panel-title">Market Pulse</h2>
+                <div class="future-content">
+                    <article class="pulse-card">
+                        <p class="pulse-label">US 10Y</p>
+                        <p class="pulse-value">4.27%</p>
+                        <p class="pulse-change up">+0.08%</p>
+                    </article>
+                    <article class="pulse-card">
+                        <p class="pulse-label">DXY</p>
+                        <p class="pulse-value">104.12</p>
+                        <p class="pulse-change down">-0.11%</p>
+                    </article>
+                    <article class="pulse-card">
+                        <p class="pulse-label">VIX</p>
+                        <p class="pulse-value">16.24</p>
+                        <p class="pulse-change down">-1.94%</p>
+                    </article>
+                </div>
+            </aside>
+        </main>
+    </div>
+
+    <script>
+        const tabs = document.querySelectorAll(".portfolio-tab");
+        const panels = document.querySelectorAll(".strategy-metrics");
+        const portfolioMenu = document.querySelector(".portfolio-menu");
+        const portfolioTrigger = document.querySelector(".portfolio-trigger");
+        const portfolioDrawer = document.querySelector(".portfolio-drawer");
+
+        const setMenuOpen = (isOpen) => {
+            if (!portfolioMenu || !portfolioTrigger || !portfolioDrawer) {
+                return;
+            }
+
+            portfolioMenu.classList.toggle("is-open", isOpen);
+            portfolioTrigger.setAttribute("aria-expanded", String(isOpen));
+            portfolioDrawer.hidden = !isOpen;
+        };
+
+        if (portfolioTrigger) {
+            portfolioTrigger.addEventListener("click", () => {
+                const isOpen = portfolioMenu.classList.contains("is-open");
+                setMenuOpen(!isOpen);
+            });
+        }
+
+        tabs.forEach((tab) => {
+            tab.addEventListener("click", () => {
+                const target = tab.dataset.target;
+
+                tabs.forEach((button) => {
+                    const isActive = button === tab;
+                    button.classList.toggle("is-active", isActive);
+                    button.setAttribute("aria-selected", String(isActive));
+                });
+
+                panels.forEach((panel) => {
+                    const isActive = panel.dataset.portfolioPanel === target;
+                    panel.classList.toggle("is-active", isActive);
+                });
+
+                setMenuOpen(false);
+            });
+        });
+
+        document.addEventListener("click", (event) => {
+            if (!portfolioMenu) {
+                return;
+            }
+            if (!portfolioMenu.contains(event.target)) {
+                setMenuOpen(false);
+            }
+        });
+
+        document.addEventListener("keydown", (event) => {
+            if (event.key === "Escape") {
+                setMenuOpen(false);
+            }
+        });
+    </script>
+</body>
+</html>

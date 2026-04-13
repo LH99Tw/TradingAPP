@@ -256,98 +256,41 @@ flowchart TD
 
 ```text
 /
+  .venv/
+  develop-plans/
+  frontend-examples/
   app/
-    electron/
+    data/
+    service/
+    scripts/
+    src/
       main/
       preload/
-      ipc/
-    renderer/
-      src/
-        app/
-        pages/
-        features/
-        widgets/
-        shared/
-        styles/
-  engine/
-    src/
-      agents/
-      orchestration/
-      dsl/
-      data/
-      features/
-      strategies/
-      backtest/
-      portfolio/
-      risk/
-      execution/
-      review/
-      memory/
-      reports/
-      utils/
-    tests/
-  packages/
-    contracts/
-    shared-types/
-    design-tokens/
-  data/
-    raw/
-    normalized/
-    features/
-    results/
-  develop-plans/
+      renderer/
+  etc/
 ```
 
-### 7.1. `engine/src/agents`
+### 7.1. `app/src`
 
-- 각 에이전트별 입력/출력 처리
-- 상태 관리
-- 개별 실행 로직
+- Electron 실행 핵심 코드
+- `main`: BrowserWindow/앱 라이프사이클
+- `preload`: 안전한 브리지
+- `renderer`: React UI
 
-예:
+### 7.2. `app/service`
 
-- `technical_signal_agent.py`
-- `fundamental_ranking_agent.py`
-- `macro_regime_agent.py`
-- `review_agent.py`
-- `monitoring_agent.py`
+- 백엔드 기능 모듈 확장 위치
+- 도메인별로 `service/<domain>/...` 구조 유지
 
-### 7.2. `engine/src/orchestration`
+### 7.3. `app/data`
 
-- 에이전트 순서 정의
-- workflow state machine
-- schedule 기반 자동 실행
-- dependency resolution
+- 실행에 필요한 로컬 데이터 파일 위치
+- 런타임 캐시/샘플 데이터/초기 설정 파일 관리
 
-### 7.3. `engine/src/dsl`
+### 7.4. `frontend-examples`
 
-- 전략 DSL schema
-- validator
-- parser
-- compiler to execution graph
-
-### 7.4. `engine/src/review`
-
-- 전략 심사 규칙
-- 승인 정책
-- live 승격 규칙
-
-### 7.5. `engine/src/memory`
-
-- 전략 실험 히스토리
-- 실패 사례
-- operator 메모
-- AI 참고용 이전 결과
-
-### 7.6. `app/renderer/src/features`
-
-- `agent-console`
-- `strategy-lab`
-- `backtests`
-- `portfolio`
-- `risk-monitor`
-- `approvals`
-- `settings`
+- Electron 반영 전 정적 시안 검증용
+- 디자인/레이아웃 실험 공간
 
 ---
 
