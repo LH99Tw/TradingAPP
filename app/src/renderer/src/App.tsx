@@ -37,7 +37,9 @@ export function App(): JSX.Element {
   const [selectedRange, setSelectedRange] = useState<TimeRange>('1M')
   const [isPortfolioMenuOpen, setIsPortfolioMenuOpen] = useState(false)
   const [viewMode, setViewMode] = useState<ViewMode>('dashboard')
+  const [scrollProgress, setScrollProgress] = useState(0)
   const portfolioMenuRef = useRef<HTMLDivElement | null>(null)
+  const contentScrollRef = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
     const handleOutsideClick = (event: MouseEvent): void => {
@@ -63,6 +65,37 @@ export function App(): JSX.Element {
       window.removeEventListener('keydown', handleEscape)
     }
   }, [])
+
+  useEffect(() => {
+    const contentEl = contentScrollRef.current
+    if (!contentEl) {
+      return
+    }
+
+    const updateScrollProgress = (): void => {
+      const scrollable = contentEl.scrollHeight - contentEl.clientHeight
+      if (scrollable <= 0) {
+        setScrollProgress(0)
+        return
+      }
+
+      const nextProgress = (contentEl.scrollTop / scrollable) * 100
+      setScrollProgress(Math.max(0, Math.min(100, nextProgress)))
+    }
+
+    updateScrollProgress()
+    contentEl.addEventListener('scroll', updateScrollProgress, { passive: true })
+    window.addEventListener('resize', updateScrollProgress)
+
+    const resizeObserver = new ResizeObserver(() => updateScrollProgress())
+    resizeObserver.observe(contentEl)
+
+    return () => {
+      contentEl.removeEventListener('scroll', updateScrollProgress)
+      window.removeEventListener('resize', updateScrollProgress)
+      resizeObserver.disconnect()
+    }
+  }, [viewMode, selectedPortfolioId, selectedRange])
 
   const snapshot = DASHBOARD_DATA[selectedPortfolioId]
   const dashboardData = getDashboardData(selectedPortfolioId, selectedRange)
@@ -107,39 +140,45 @@ export function App(): JSX.Element {
         </div>
       </header>
 
-      {viewMode === 'dashboard' ? (
-        <main className="dashboard-shell">
-          <DashboardHeaderSummary summary={dashboardData.portfolioSummary} greeting={snapshot.greeting} lastUpdated={snapshot.lastUpdated} />
+      <div className="top-progress-track" aria-hidden="true">
+        <span className="top-progress-fill" style={{ width: `${scrollProgress}%` }}></span>
+      </div>
 
-          <section className="dashboard-main-grid">
-            <PortfolioPerformancePanel
-              snapshot={snapshot}
-              selectedRange={selectedRange}
-              onRangeChange={setSelectedRange}
-              selectedPortfolioId={selectedPortfolioId}
-              onPortfolioChange={setSelectedPortfolioId}
-              isPortfolioMenuOpen={isPortfolioMenuOpen}
-              setIsPortfolioMenuOpen={setIsPortfolioMenuOpen}
-              portfolioMenuRef={portfolioMenuRef}
-              performanceSeries={dashboardData.performanceSeries}
-            />
+      <div className="content-scroll" ref={contentScrollRef}>
+        {viewMode === 'dashboard' ? (
+          <main className="dashboard-shell">
+            <DashboardHeaderSummary summary={dashboardData.portfolioSummary} greeting={snapshot.greeting} lastUpdated={snapshot.lastUpdated} />
 
-            <ContributionPanel
-              title="Profit & Loss Breakdown"
-              topContributors={dashboardData.topContributors}
-              bottomContributors={dashboardData.bottomContributors}
-            />
-          </section>
+            <section className="dashboard-main-grid">
+              <PortfolioPerformancePanel
+                snapshot={snapshot}
+                selectedRange={selectedRange}
+                onRangeChange={setSelectedRange}
+                selectedPortfolioId={selectedPortfolioId}
+                onPortfolioChange={setSelectedPortfolioId}
+                isPortfolioMenuOpen={isPortfolioMenuOpen}
+                setIsPortfolioMenuOpen={setIsPortfolioMenuOpen}
+                portfolioMenuRef={portfolioMenuRef}
+                performanceSeries={dashboardData.performanceSeries}
+              />
 
-          <section className="dashboard-secondary-grid">
-            <StrategyImpactPanel items={dashboardData.strategyImpactItems} />
-            <MarketPulsePanel items={dashboardData.marketDrivers} />
-            <AllocationPanel items={dashboardData.allocationItems} />
-          </section>
-        </main>
-      ) : (
-        <SettingsPage onBack={() => setViewMode('dashboard')} />
-      )}
+              <ContributionPanel
+                title="Profit & Loss Breakdown"
+                topContributors={dashboardData.topContributors}
+                bottomContributors={dashboardData.bottomContributors}
+              />
+            </section>
+
+            <section className="dashboard-secondary-grid">
+              <StrategyImpactPanel items={dashboardData.strategyImpactItems} />
+              <MarketPulsePanel items={dashboardData.marketDrivers} />
+              <AllocationPanel items={dashboardData.allocationItems} />
+            </section>
+          </main>
+        ) : (
+          <SettingsPage onBack={() => setViewMode('dashboard')} />
+        )}
+      </div>
     </div>
   )
 }
